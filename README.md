@@ -1,3 +1,12 @@
+# Dutch Pay
+Split bills with friends!
+
+Dutch pay will let you know how to split bills with minimum transaction.
+
+For new features, please use [projects](https://github.com/dutch-pay/dutch-pay.github.io/projects)
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
