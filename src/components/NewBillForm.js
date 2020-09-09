@@ -60,7 +60,7 @@ function NewBillForm(props) {
             <Col xs={12} md={7}>
               <Form.Group  controlId="billName">
                 <Form.Label><FontAwesomeIcon icon={faStore} /> Description</Form.Label>
-                <Form.Control  name="billName" type="text" onChange={handleInputChange} />
+                <Form.Control required name="billName" type="text" onChange={handleInputChange} />
               </Form.Group>
             </Col>
           </Form.Row>
