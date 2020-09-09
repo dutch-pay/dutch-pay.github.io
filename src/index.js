@@ -1,11 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'index.scss';
-<<<<<<< HEAD
-import App from 'components/App';
-=======
 import App from 'App';
->>>>>>> b661113... add dutchpay
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(

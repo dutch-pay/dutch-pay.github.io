@@ -1,4 +1,4 @@
-import React, { useState }from 'react'
+import React, { useState, useRef }from 'react'
 import { Container, Button, Card, Row, Col, Table, Toast } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faPaperPlane, faCopy, faDownload, faSpinner, faRedo } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +9,8 @@ import 'components/Settlement.scss'
 import 'components/DutchToast.scss'
 
 function Settlement(props) {
+  const transactionToStringElem = useRef(null);
+
   const [downloading,       setDownloading]       = useState(false)
   const [copiedToastShow,   setCopiedToastShow]   = useState(false)
   const [downloadToastShow, setDownloadToastShow] = useState(false)
@@ -92,13 +94,14 @@ function Settlement(props) {
     return transactions
   })(debtByPerson)
 
-  const transactionToString = transactions.flatMap(a => `${a.sender}->${a.receiver} : ${a.amount}`)
+  const transactionToString = transactions.flatMap(a => `${a.sender}->${a.receiver} : ${Math.round(a.amount * 10) / 10}`)
                                           .join(", ")
 
   function copyToClipboard() {
-    const $copyText = document.querySelector("#transaction-plain-string")
-    $copyText.select()
-    $copyText.setSelectionRange(0, 99999) /*For mobile devices*/
+    const $text = transactionToStringElem.current
+
+    $text.select()
+    $text.setSelectionRange(0, 99999) /*For mobile devices*/
     document.execCommand("copy")
 
     setCopiedToastShow(true)
@@ -188,7 +191,7 @@ function Settlement(props) {
         </Col>
       </Row>
 
-      <input readOnly className="d-none" id="transaction-plain-string" value={transactionToString} />
+      <input type="text" aria-hidden="true" className="offscreen" ref={transactionToStringElem} value={transactionToString} />
 
       <div className="toast-container">
         <Toast onClose={() => {setCopiedToastShow(false)}} show={copiedToastShow} className='success-toast'delay={3000} autohide>

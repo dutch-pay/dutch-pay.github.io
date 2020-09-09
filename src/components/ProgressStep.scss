@@ -14,7 +14,13 @@
     border: 2.5px solid $dark-navy;
     background-color: white;
     margin: auto;
+
+    .number {
+      display: block;
+      margin-top: -2px;
+    }
   }
+
   .completed-step {
     background-color: $coral;
     border-color: $coral;
@@ -28,13 +34,13 @@
 }
 
 
-@media only screen and (max-width: #{$mobile-max-width}) {
+@media only screen and (max-width: 710px) {
   .progress-step {
     .step {
       font-size: 20px;
 
       .number {
-        display: inline-block;
+        display: block;
         margin-top: 2.5px;
       }
     }

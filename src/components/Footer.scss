@@ -1,8 +1,14 @@
 @import 'index.scss';
 
-footer {
+#footer-container {
+  background-color: $dark-navy;
+  padding: 20px 10px 30px 10px;
   margin-top: 50px;
-  margin-bottom: 30px;
-  color: $light-navy;
   text-align: center;
+  color: darkgray;
+
+}
+#footer-container footer {
+  margin-top: 20px;
+  color: $base-font;
 }
