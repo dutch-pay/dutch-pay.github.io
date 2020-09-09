@@ -12,7 +12,7 @@ function Footer() {
       <span>
         <b>Have new feature request? Found a bug?</b>
         <br/>
-        Feel free to create an issue&nbsp;<a target="_blank" href={issueURL}>here</a>
+        Feel free to create an issue&nbsp;<a target="_blank" rel="noopener noreferrer" href={issueURL}>here</a>
       </span>
 
       <footer>

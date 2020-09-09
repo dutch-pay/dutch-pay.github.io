@@ -32,7 +32,7 @@ function App() {
         <i className="quote">
           I went to a trip with my friends and each of us spent different amount of money for buying food, drinks and etc. After the trip, I was struggled with how to spilt all the bills. At that moment, I used this and it was super easy. What I did was just entering all the bills and DutchPay solved the problem!
           <br/>
-          -- Aree
+          - Aree
         </i>
         <br/>
         <br/>
