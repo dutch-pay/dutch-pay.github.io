@@ -1,0 +1,26 @@
+@import 'index.scss';
+
+$step-circle-radius: 2.5vw;
+$progress-bar-line-height: 5px;
+
+#progress-bar {
+  position: relative;
+
+  .progress {
+    height: $progress-bar-line-height;
+    position: absolute;
+    left: calc(15% + #{$step-circle-radius});
+    bottom: calc(#{$step-circle-radius} + #{$progress-bar-line-height});
+    width: calc(70% - 2 * #{$step-circle-radius});
+
+    .progress-bar {
+      background-color: $coral;
+    }
+  }
+
+  @media only screen and (max-width: #{$mobile-max-width}) {
+    .progress {
+      bottom: 20px;
+    }
+  }
+}

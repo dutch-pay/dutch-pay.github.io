@@ -1,0 +1,16 @@
+@import 'index.scss';
+
+#dutch-form {
+  padding: $container-padding;
+
+  .steps-container {
+    padding-top: 50px;
+  }
+  .step-title-header {
+    text-align: left;
+  }
+}
+
+@media only screen and (min-device-width: #{$mobile-max-width}) {
+  
+}

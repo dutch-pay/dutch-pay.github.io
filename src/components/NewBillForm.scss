@@ -1,0 +1,18 @@
+@import 'index.scss';
+
+.add-button {
+  background-color: $dark-green !important;
+  border: 1px solid $dark-green !important;
+
+  width: 20vw;
+  min-width: 100px;
+  display: block;
+  margin: 5px auto;
+  margin-top: 10px;
+  float: right;
+
+  &:hover {
+    background-color: darken($dark-green, 10%) !important;
+  }
+
+}

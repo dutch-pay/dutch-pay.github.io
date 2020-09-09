@@ -1,0 +1,21 @@
+@import 'index.scss';
+
+$button-color: $coral;
+
+.action-button {
+  width: 100%;
+  margin-top: 5px;
+  border: 1px solid $button-color !important;
+  background-color: $button-color !important;
+  &:hover {
+    background-color: darken($button-color, 20%) !important;
+  }
+}
+
+#report {
+  background-color: white;
+  padding: 10px;
+}
+.report-container {
+  margin: -10px;
+}
