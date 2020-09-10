@@ -18,7 +18,7 @@ function NewBillForm(props) {
   const handleInputChange = (event) => {
     setBillInfo({
       ...billInfo,
-      [event.target.name]: event.target.valueAsNumber || event.target.value,
+      [event.target.name]: event.target.name === 'number' ? event.target.valueAsNumber : event.target.value,
     });
   }
 
