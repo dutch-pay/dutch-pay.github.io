@@ -33,7 +33,7 @@ function BillsTable(props) {
           <td>{index + 1}</td>
           <td>{bill.billDate}</td>
           <td>{bill.billName}</td>
-          <td>${bill.billAmount}</td>
+          <td>{props.currencySymbol} {bill.billAmount.toLocaleString()}</td>
           <td>{bill.billPayer}</td>
           { props.actionsShow &&
             <td>
@@ -52,6 +52,7 @@ BillsTable.defaultProps = {
   actionsShow: true,
   responsive: true,
   additionalClassName: '',
+  currencySymbol: '$',
   bills: [],
 }
 export default BillsTable;

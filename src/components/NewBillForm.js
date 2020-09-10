@@ -18,7 +18,7 @@ function NewBillForm(props) {
   const handleInputChange = (event) => {
     setBillInfo({
       ...billInfo,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.valueAsNumber || event.target.value,
     });
   }
 
@@ -71,7 +71,7 @@ function NewBillForm(props) {
                 <Form.Label><FontAwesomeIcon icon={faMoneyBillWave} /> Amount</Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
-                    <InputGroup.Text>$</InputGroup.Text>
+                    <InputGroup.Text>{props.currencySymbol}</InputGroup.Text>
                   </InputGroup.Prepend>
                   <Form.Control required name="billAmount" type="number" onChange={handleInputChange} />
                 </InputGroup>
@@ -81,7 +81,6 @@ function NewBillForm(props) {
             <Col xs={12} md={7}>
               <Form.Group controlId="billPayer">
                 <Form.Label><FontAwesomeIcon icon={faUser} /> Payer</Form.Label>
-                {/* todo: change to radio button */}
                 <Form.Control required name="billPayer" as="select" onChange={handleInputChange}>
                   <option></option>
                   { props.peopleNames.map(name => <option key={name}>{name}</option>) }

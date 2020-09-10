@@ -1,23 +1,35 @@
 import React, { useState } from 'react'
-import { Container, Form, Button } from 'react-bootstrap'
+import { Container, Form, Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUsers, faMoneyCheckAlt, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faUsers, faMoneyCheckAlt, faArrowRight, faDollarSign } from '@fortawesome/free-solid-svg-icons'
+
+import 'components/ExpenditureInfo.scss'
 
 function ExpenditureInfo(props) {
+  const currencies = ['$', '₩', '€', '£']
+
   const [validated, setValidated] = useState(false);
   const [info, setInfo] = useState({
     title: '',
     peopleNames: '',
+    currency: currencies[0].name,
   });
 
-  const handleInputChange = (event) => {
+  function handleInputChange(event) {
     setInfo({
       ...info,
       [event.target.name]: event.target.value,
-    });
+    })
   }
 
-  const handleSubmit = (event) => {
+  function handleCurrencyChange(value) {
+    setInfo({
+      ...info,
+      currency: value
+    })
+  }
+
+  function handleSubmit(event) {
     event.preventDefault()
     event.stopPropagation()
 
@@ -26,6 +38,7 @@ function ExpenditureInfo(props) {
     setValidated(true)
 
     if (validated) {
+      window.dutch = { currency: currencies.filter(c => c.name === info.currency)[0] }
       if (props.onSubmitSucceeded) {
         props.onSubmitSucceeded(info)
       }
@@ -46,6 +59,16 @@ function ExpenditureInfo(props) {
           <Form.Label><FontAwesomeIcon icon={faUsers} /> Who do you want to split with?</Form.Label>
           <Form.Control required name="peopleNames" type="text" placeholder="Aree, Tomas, Jessica" onChange={handleInputChange} />
           <Form.Text>Enter the names of people separating with comma (,)</Form.Text>
+        </Form.Group>
+
+        <Form.Group controlId="currency">
+          <Form.Label><FontAwesomeIcon icon={faDollarSign} /> Select the currency</Form.Label>
+          <br/>
+          <ToggleButtonGroup id="currency-button-group" type="radio" name="currency" defaultValue={info.currency} onChange={handleCurrencyChange}>
+            { currencies.map((currency, _) =>
+                <ToggleButton value={currency} key={currency}>{currency}</ToggleButton>)}
+          </ToggleButtonGroup>
+
         </Form.Group>
 
         <Button className="next-button" type="submit">

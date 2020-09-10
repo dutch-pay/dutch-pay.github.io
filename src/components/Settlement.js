@@ -1,7 +1,7 @@
 import React, { useState, useRef }from 'react'
 import { Container, Button, Card, Row, Col, Table, Toast } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight, faPaperPlane, faCopy, faDownload, faSpinner, faRedo } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight, faExclamationTriangle, faPaperPlane, faCopy, faDownload, faSpinner, faRedo } from '@fortawesome/free-solid-svg-icons'
 import { toJpeg } from 'html-to-image'
 
 import BillsTable from 'components/BillsTable'
@@ -9,7 +9,7 @@ import 'components/Settlement.scss'
 import 'components/DutchToast.scss'
 
 function Settlement(props) {
-  const transactionToStringElem = useRef(null);
+  const reportElem = useRef(null);
 
   const [downloading,       setDownloading]       = useState(false)
   const [copiedToastShow,   setCopiedToastShow]   = useState(false)
@@ -98,11 +98,13 @@ function Settlement(props) {
                                           .join(", ")
 
   function copyToClipboard() {
-    const $text = transactionToStringElem.current
-
+    var $text = document.createElement("input")
+    $text.value = transactionToString
+    document.body.appendChild($text)
     $text.select()
     $text.setSelectionRange(0, 99999) /*For mobile devices*/
     document.execCommand("copy")
+    document.body.removeChild($text)
 
     setCopiedToastShow(true)
   }
@@ -110,12 +112,16 @@ function Settlement(props) {
   function download() {
     setDownloading(true)
 
-    toJpeg(document.getElementById('report'), { quality: 0.95 })
+    toJpeg(reportElem.current, { quality: 0.95 })
       .then(function (dataUrl) {
+        alert(dataUrl)
         var link = document.createElement('a')
         link.download = `${expenditure.title.split(' ').join('_')}.jpeg`;
         link.href = dataUrl
+        document.body.appendChild(link);
         link.click()
+
+        document.body.removeChild(link);
       });
 
     setDownloading(false)
@@ -125,7 +131,7 @@ function Settlement(props) {
   return props.display && (
     <Container fluid className="steps-container">
       <div className="report-container">
-        <div id="report">
+        <div ref={reportElem} id="report">
 
           <h2 className="step-title-header">Settlement</h2>
 
@@ -135,15 +141,18 @@ function Settlement(props) {
               <Card.Subtitle> with {expenditure.peopleNames.join(', ')}</Card.Subtitle>
 
               <Card.Text>
-                Sum of all bills: <b>${sum}</b><br/>
-                Cost of each person: <b>${amountByPerson}</b>
+                Sum of all bills: <b>{props.currencySymbol}{sum.toLocaleString()}</b><br/>
+                Cost of each person: <b>{props.currencySymbol}{amountByPerson.toLocaleString()}</b>
               </Card.Text>
             </Card.Body>
           </Card>
           <br/>
 
           <h3>Bill list</h3>
-          <BillsTable bills={bills} actionsShow={false} responsive={false} />
+          <BillsTable bills={bills}
+                      currencySymbol={props.currencySymbol}
+                      actionsShow={false}
+                      responsive={false} />
 
           <Card>
             <Card.Body>
@@ -158,7 +167,7 @@ function Settlement(props) {
                     <td><FontAwesomeIcon icon={faArrowRight} /></td>
                     <td>{transaction.receiver}</td>
                     <td>:</td>
-                    <td>${Math.round(transaction.amount * 10) / 10}</td>
+                    <td>{props.currencySymbol}{(Math.round(transaction.amount * 10) / 10).toLocaleString()}</td>
                   </tr>
                 )}
                 </tbody>
@@ -191,12 +200,10 @@ function Settlement(props) {
         </Col>
       </Row>
 
-      <input type="text" aria-hidden="true" className="offscreen" ref={transactionToStringElem} value={transactionToString} />
-
       <div className="toast-container">
         <Toast onClose={() => {setCopiedToastShow(false)}} show={copiedToastShow} className='success-toast'delay={3000} autohide>
           <Toast.Header>
-            <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt=""/>
+            <FontAwesomeIcon icon={faExclamationTriangle} className="rounded mr-2"/>
             <strong className="mr-auto">Copied to clipboard!</strong>
           </Toast.Header>
           <Toast.Body>{ transactionToString }</Toast.Body>
@@ -204,7 +211,7 @@ function Settlement(props) {
 
         <Toast onClose={() => {setDownloadToastShow(false)}} show={downloadToastShow} className='success-toast' delay={3000} autohide>
           <Toast.Header>
-            <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt=""/>
+            <FontAwesomeIcon icon={faExclamationTriangle} className="rounded mr-2"/>
             <strong className="mr-auto">Download completed!</strong>
           </Toast.Header>
           <Toast.Body>Check the download folder.. :)</Toast.Body>
@@ -216,6 +223,7 @@ function Settlement(props) {
 
 export default Settlement;
 Settlement.defaultProps = {
+  currencySymbol: '$',
   expenditureInfo: {title: '', peopleNames: ['']},
   bills: [{billDate: '', billName: '', billAmount: 0, billPayer: ''}]
 }

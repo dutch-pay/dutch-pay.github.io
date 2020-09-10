@@ -11,7 +11,8 @@ function DutchForm() {
 
   const [expenditureInfo, setExpenditureInfo] = useState({
     title: '',
-    peopleNames: ['']
+    peopleNames: [''],
+    currency: ''
   })
 
   const [bills, setBills] = useState([
@@ -29,7 +30,8 @@ function DutchForm() {
   const afterStep1Submitted = (info) => {
     setExpenditureInfo({
       title: info.title,
-      peopleNames: info.peopleNames.split(",").map(name => name.trim())
+      peopleNames: info.peopleNames.split(",").map(name => name.trim()),
+      currency: info.currency
     })
 
     setCurrentStep(2)
@@ -54,9 +56,15 @@ function DutchForm() {
 
       <ExpenditureInfo display={expenditureInfoDisplayed} onSubmitSucceeded={afterStep1Submitted} />
 
-      <BillsInfo display={billsInfoDisplayed} onSubmitSucceeded={afterStep2Submitted} peopleNames={expenditureInfo.peopleNames} />
+      <BillsInfo display={billsInfoDisplayed}
+                 onSubmitSucceeded={afterStep2Submitted}
+                 currencySymbol={expenditureInfo.currency}
+                 peopleNames={expenditureInfo.peopleNames} />
 
-      <Settlement display={resultDisplayed} expenditureInfo={expenditureInfo} bills={bills} />
+      <Settlement display={resultDisplayed}
+                  expenditureInfo={expenditureInfo}
+                  currencySymbol={expenditureInfo.currency}
+                  bills={bills} />
 
     </div>
   )
