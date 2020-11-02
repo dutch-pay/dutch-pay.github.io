@@ -7,8 +7,8 @@ import 'components/DutchProgressBar.scss'
 
 function DutchProgressBar(props) {
   const steps = [
-    "Basic info",
-    "Bills",
+    "Enter info.",
+    "Enter bills",
     "Get result"
   ]
 

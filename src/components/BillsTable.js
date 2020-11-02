@@ -7,10 +7,10 @@ import 'components/BillsTable.scss'
 
 function BillsTable(props) {
   const columnNames = [
-    'Date',
-    'Description',
-    'Amount',
     'Payer',
+    'Amount',
+    'Description',
+    'Date',
     'Actions'
   ]
   if (!props.actionsShow) {
@@ -31,10 +31,10 @@ function BillsTable(props) {
       { props.bills.map((bill, index) => (
         <tr key={bill.id}>
           <td>{index + 1}</td>
-          <td>{bill.billDate}</td>
-          <td>{bill.billName}</td>
-          <td>{props.currencySymbol} {bill.billAmount.toLocaleString()}</td>
           <td>{bill.billPayer}</td>
+          <td>{props.currencySymbol} {bill.billAmount.toLocaleString()}</td>
+          <td>{bill.billName}</td>
+          <td>{bill.billDate}</td>
           { props.actionsShow &&
             <td>
               <Button variant="link" className="p-0" onClick={() => props.onBillDeletionClicked(bill)}>

@@ -2,7 +2,7 @@ import React, { useState, useRef }from 'react'
 import { Container, Button, Card, Row, Col, Table, Toast } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faExclamationTriangle, faPaperPlane, faCopy, faDownload, faSpinner, faRedo } from '@fortawesome/free-solid-svg-icons'
-import { toJpeg } from 'html-to-image'
+import domtoimage from 'dom-to-image'
 
 import BillsTable from 'components/BillsTable'
 import 'components/Settlement.scss'
@@ -10,6 +10,7 @@ import 'components/DutchToast.scss'
 
 function Settlement(props) {
   const reportElem = useRef(null);
+  const downloadButtonElem = useRef(null);
 
   const [downloading,       setDownloading]       = useState(false)
   const [copiedToastShow,   setCopiedToastShow]   = useState(false)
@@ -112,17 +113,16 @@ function Settlement(props) {
   function download() {
     setDownloading(true)
 
-    toJpeg(reportElem.current, { quality: 0.95 })
-      .then(function (dataUrl) {
-        alert(dataUrl)
-        var link = document.createElement('a')
-        link.download = `${expenditure.title.split(' ').join('_')}.jpeg`;
-        link.href = dataUrl
-        document.body.appendChild(link);
+    domtoimage.toPng(reportElem.current)
+      .then(dataURL => {
+        var link = document.createElement("a")
+        document.body.appendChild(link)
+        link.download = `${expenditure.title.split(' ').join('_')}.jpeg`
+        link.href = dataURL
+        link.target = '_blank'
         link.click()
-
-        document.body.removeChild(link);
-      });
+        document.body.removeChild(link)
+      })
 
     setDownloading(false)
     setDownloadToastShow(true)
@@ -154,11 +154,11 @@ function Settlement(props) {
                       actionsShow={false}
                       responsive={false} />
 
-          <Card>
+          <Card border={'success'}>
             <Card.Body>
               <Card.Title>Minimum transaction</Card.Title>
 
-              <Table borderless responsive size="sm">
+              <Table borderless responsive size="sm" id="transaction-table">
                 <tbody>
                 {transactions.map((transaction, index) =>
                   <tr key={`transaction-row-${index}`}>
@@ -189,7 +189,7 @@ function Settlement(props) {
             <FontAwesomeIcon icon={faSpinner} spin /> :
             <FontAwesomeIcon icon={faDownload}/> }
             &nbsp;
-           { downloading ? 'Downloading' : 'Download' }
+           { downloading ? 'Downloading' : 'Download the report' }
           </Button>
         </Col>
       </Row>

@@ -6,13 +6,13 @@ import { faUsers, faMoneyCheckAlt, faArrowRight, faDollarSign } from '@fortaweso
 import 'components/ExpenditureInfo.scss'
 
 function ExpenditureInfo(props) {
-  const currencies = ['$', '₩', '€', '£']
+  const currencies = ['$', '₩', '€', '£'];
 
   const [validated, setValidated] = useState(false);
   const [info, setInfo] = useState({
     title: '',
     peopleNames: '',
-    currency: currencies[0].name,
+    currency: currencies[0],
   });
 
   function handleInputChange(event) {
