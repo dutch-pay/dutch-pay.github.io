@@ -18,7 +18,8 @@ function BillsTable(props) {
   }
 
   return (
-    <Table responsive={props.responsive} className={`${props.additionalClassName} bill-table mt-4`}>
+    <Table responsive={props.responsive}
+           className={`${props.additionalClassName} bill-table mt-4`}>
       <thead>
         <tr>
           <th>#</th>
@@ -37,7 +38,9 @@ function BillsTable(props) {
           <td>{bill.billDate}</td>
           { props.actionsShow &&
             <td>
-              <Button variant="link" className="p-0" onClick={() => props.onBillDeletionClicked(bill)}>
+              <Button variant="link"
+                      className="p-0"
+                      onClick={() => props.onBillDeletionClicked(bill)}>
                 <FontAwesomeIcon icon={faTrashAlt}/>
               </Button>
             </td>

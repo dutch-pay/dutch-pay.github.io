@@ -23,3 +23,37 @@ $button-color: $coral;
 #transaction-table {
   margin-bottom: 0px;
 }
+
+@media only screen and (max-device-width: #{350px}) {
+  .bill-table-mobile table {
+    font-size: 11px;
+
+    th, td {
+      padding: 6px;
+    }
+
+    th:nth-child(4), td:nth-child(4) {
+      max-width: 85px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+}
+
+@media only screen and (min-device-width: #{351px}) and (max-device-width: #{415px}) {
+  .bill-table-mobile table {
+    font-size: 13px;
+
+    th, td {
+      padding: 6px;
+    }
+
+    th:nth-child(4), td:nth-child(4) {
+      max-width: 95px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+}

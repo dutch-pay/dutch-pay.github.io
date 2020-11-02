@@ -10,6 +10,7 @@ import 'components/DutchToast.scss'
 
 function Settlement(props) {
   const reportElem = useRef(null);
+  const settlementTableElem = useRef(null);
 
   const [downloading,       setDownloading]       = useState(false)
   const [copiedToastShow,   setCopiedToastShow]   = useState(false)
@@ -102,7 +103,7 @@ function Settlement(props) {
     $text.value = transactionToString
     document.body.appendChild($text)
     $text.select()
-    $text.setSelectionRange(0, 99999) /*For mobile devices*/
+    $text.setSelectionRange(0, 99999) /* For mobile devices */
     document.execCommand("copy")
     document.body.removeChild($text)
 
@@ -112,8 +113,11 @@ function Settlement(props) {
   function download() {
     setDownloading(true)
 
+    settlementTableElem.current.classList.add("bill-table-mobile")
     domtoimage.toPng(reportElem.current)
       .then(dataURL => {
+        settlementTableElem.current.classList.remove("bill-table-mobile")
+
         var link = document.createElement("a")
         document.body.appendChild(link)
         link.download = `${expenditure.title.split(' ').join('_')}.jpeg`
@@ -128,10 +132,10 @@ function Settlement(props) {
   }
 
   return props.display && (
-    <Container fluid className="steps-container">
+    <Container fluid
+               className="steps-container">
       <div className="report-container">
         <div ref={reportElem} id="report">
-
           <h2 className="step-title-header">Settlement</h2>
 
           <Card>
@@ -148,16 +152,21 @@ function Settlement(props) {
           <br/>
 
           <h3>Bill list</h3>
-          <BillsTable bills={bills}
-                      currencySymbol={props.currencySymbol}
-                      actionsShow={false}
-                      responsive={false} />
+          <div ref={settlementTableElem}>
+            <BillsTable bills={bills}
+                        currencySymbol={props.currencySymbol}
+                        actionsShow={false}
+                        responsive={true} />
+          </div>
 
           <Card border={'success'}>
             <Card.Body>
               <Card.Title>Minimum transaction</Card.Title>
 
-              <Table borderless responsive size="sm" id="transaction-table">
+              <Table id="transaction-table"
+                     borderless
+                     responsive
+                     size="sm">
                 <tbody>
                 {transactions.map((transaction, index) =>
                   <tr key={`transaction-row-${index}`}>
@@ -178,12 +187,14 @@ function Settlement(props) {
 
       <Row className="mt-3">
         <Col xs={12} md={6}>
-          <Button className="action-button" onClick={copyToClipboard}>
+          <Button className="action-button"
+                  onClick={copyToClipboard}>
             <FontAwesomeIcon icon={faCopy}/>&nbsp;Copy to clipboard
           </Button>
         </Col>
         <Col xs={12} md={6}>
-          <Button className="action-button" onClick={download}>
+          <Button className="action-button"
+                  onClick={download}>
            { downloading ?
             <FontAwesomeIcon icon={faSpinner} spin /> :
             <FontAwesomeIcon icon={faDownload}/> }
@@ -194,23 +205,35 @@ function Settlement(props) {
       </Row>
 
       <Row className="mt-5">
-        <Col xs={{ span: 8, offset: 2 }}>
-          <a className="text-center d-block" href="/"><FontAwesomeIcon icon={faRedo}/>&nbsp;Begin new dutch pay</a>
+        <Col xs={{ span: 10, offset: 1 }}>
+          <a className="text-center d-block" href="/">
+            <FontAwesomeIcon icon={faRedo}/>&nbsp;Begin new dutch pay
+          </a>
         </Col>
       </Row>
 
       <div className="toast-container">
-        <Toast onClose={() => {setCopiedToastShow(false)}} show={copiedToastShow} className='success-toast'delay={3000} autohide>
+        <Toast onClose={() => {setCopiedToastShow(false)}}
+               show={copiedToastShow}
+               className='success-toast'
+               delay={3000}
+               autohide>
           <Toast.Header>
-            <FontAwesomeIcon icon={faExclamationTriangle} className="rounded mr-2"/>
+            <FontAwesomeIcon icon={faExclamationTriangle}
+                             className="rounded mr-2"/>
             <strong className="mr-auto">Copied to clipboard!</strong>
           </Toast.Header>
           <Toast.Body>{ transactionToString }</Toast.Body>
         </Toast>
 
-        <Toast onClose={() => {setDownloadToastShow(false)}} show={downloadToastShow} className='success-toast' delay={3000} autohide>
+        <Toast onClose={() => {setDownloadToastShow(false)}}
+               show={downloadToastShow}
+               className='success-toast'
+               delay={3000}
+               autohide>
           <Toast.Header>
-            <FontAwesomeIcon icon={faExclamationTriangle} className="rounded mr-2"/>
+            <FontAwesomeIcon icon={faExclamationTriangle}
+                             className="rounded mr-2"/>
             <strong className="mr-auto">Download completed!</strong>
           </Toast.Header>
           <Toast.Body>Check the download folder.. :)</Toast.Body>

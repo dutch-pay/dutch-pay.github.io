@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, Button, Col, Card, InputGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCalendarAlt, faStore, faUser, faArrowDown, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarAlt, faStore, faUser, faPlus, faMoneyBillWave } from '@fortawesome/free-solid-svg-icons'
 
 import 'components/NewBillForm.scss'
 
@@ -16,9 +16,11 @@ function NewBillForm(props) {
   });
 
   const handleInputChange = (event) => {
+    const name = event.target.name
     setBillInfo({
       ...billInfo,
-      [event.target.name]: event.target.name === 'number' ? event.target.valueAsNumber : event.target.value,
+      [name]: name === 'number' ? event.target.valueAsNumber
+                                  : event.target.value,
     });
   }
 
@@ -49,22 +51,32 @@ function NewBillForm(props) {
         <Card.Title>Add new bill</Card.Title>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Row>
-            <Col xs={12} md={5}>
+            <Col xs={6} md={5}>
               <Form.Group controlId="billAmount">
-                <Form.Label><FontAwesomeIcon icon={faMoneyBillWave} /> Amount *</Form.Label>
+                <Form.Label>
+                  <FontAwesomeIcon icon={faMoneyBillWave} /> Amount *
+                </Form.Label>
                 <InputGroup>
                   <InputGroup.Prepend>
                     <InputGroup.Text>{props.currencySymbol}</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control required name="billAmount" type="number" onChange={handleInputChange} />
+                  <Form.Control required
+                                name="billAmount"
+                                type="number"
+                                onChange={handleInputChange} />
                 </InputGroup>
               </Form.Group>
             </Col>
 
-            <Col xs={12} md={7}>
+            <Col xs={6} md={7}>
               <Form.Group controlId="billPayer">
-                <Form.Label><FontAwesomeIcon icon={faUser} /> Payer *</Form.Label>
-                <Form.Control required name="billPayer" as="select" onChange={handleInputChange}>
+                <Form.Label>
+                  <FontAwesomeIcon icon={faUser} /> Payer *
+                </Form.Label>
+                <Form.Control required
+                              name="billPayer"
+                              as="select"
+                              onChange={handleInputChange}>
                   { props.peopleNames.map(name => <option key={name}>{name}</option>) }
                 </Form.Control>
               </Form.Group>
@@ -73,22 +85,32 @@ function NewBillForm(props) {
 
           <Form.Row>
             <Col xs={12} md={5}>
-              <Form.Group controlId="billDate">
-                <Form.Label><FontAwesomeIcon icon={faCalendarAlt} /> Bill date</Form.Label>
-                <Form.Control name="billDate"  type="date" onChange={handleInputChange} />
+              <Form.Group controlId="billName">
+                <Form.Label>
+                  <FontAwesomeIcon icon={faStore} /> Description
+                </Form.Label>
+                <Form.Control name="billName"
+                              type="text"
+                              onChange={handleInputChange} />
               </Form.Group>
             </Col>
-            <Col xs={12} md={7}>
-              <Form.Group  controlId="billName">
-                <Form.Label><FontAwesomeIcon icon={faStore} /> Description</Form.Label>
-                <Form.Control name="billName" type="text" onChange={handleInputChange} />
+            <Col xs={7} md={5}>
+              <Form.Group controlId="billDate">
+                <Form.Label>
+                  <FontAwesomeIcon icon={faCalendarAlt} /> Bill date
+                </Form.Label>
+                <Form.Control name="billDate"
+                              type="date"
+                              onChange={handleInputChange} />
               </Form.Group>
+            </Col>
+            <Col xs={5} md={2}>
+              <Button className="add-button"
+                      type="submit">
+                Add <FontAwesomeIcon icon={faPlus}/>
+              </Button>
             </Col>
           </Form.Row>
-
-          <Button className="add-button" type="submit">
-            Add <FontAwesomeIcon icon={faArrowDown}/>
-          </Button>
         </Form>
       </Card.Body>
     </Card>

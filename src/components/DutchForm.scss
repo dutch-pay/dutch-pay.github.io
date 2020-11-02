@@ -2,6 +2,8 @@
 
 #dutch-form {
   padding: $container-padding;
+  max-width: 1000px;
+  margin: auto;
 
   .steps-container {
     padding-top: 50px;
@@ -9,8 +11,4 @@
   .step-title-header {
     text-align: left;
   }
-}
-
-@media only screen and (min-device-width: #{$mobile-max-width}) {
-  
 }
