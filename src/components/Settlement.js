@@ -10,7 +10,6 @@ import 'components/DutchToast.scss'
 
 function Settlement(props) {
   const reportElem = useRef(null);
-  const downloadButtonElem = useRef(null);
 
   const [downloading,       setDownloading]       = useState(false)
   const [copiedToastShow,   setCopiedToastShow]   = useState(false)
