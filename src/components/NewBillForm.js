@@ -37,7 +37,7 @@ function NewBillForm(props) {
       setBillInfo({
         ...billInfo,
         billAmount: billInfo.billAmount,
-        id: `${billInfo.billName}_${new Date().toJSON()}`
+        id: new Date().toJSON()
       })
       props.onSubmitSucceeded(billInfo)
       form.reset()

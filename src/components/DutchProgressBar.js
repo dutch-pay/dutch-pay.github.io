@@ -18,7 +18,10 @@ function DutchProgressBar(props) {
       <Row>
         { steps.map((step, i) => (
           <Col key={i+step} xs={12 / steps.length}>
-            <ProgressStep step={i + 1} title={step} completed={(i + 1 < props.currentStep) || (props.currentStep === steps.length)} />
+            <ProgressStep step={i + 1}
+                          title={step}
+                          completed={(i + 1 < props.currentStep) || (props.currentStep === steps.length)}
+                          />
           </Col>
         )) }
       </Row>

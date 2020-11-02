@@ -37,8 +37,20 @@ function ExpenditureInfo(props) {
     const validated = form.checkValidity()
     setValidated(true)
 
-    if (validated) {
-      window.dutch = { currency: currencies.filter(c => c.name === info.currency)[0] }
+    if (info.title === '' && info.peopleNames === '' &&
+        props.expenditureInfo.title !== '' &&
+        props.expenditureInfo.peopleNames.length > 0) {
+      if (props.onSubmitSucceeded) {
+        props.onSubmitSucceeded({
+          title: props.expenditureInfo.title,
+          peopleNames: props.expenditureInfo.peopleNames.join(", "),
+          currency: props.expenditureInfo.currency
+        })
+      }
+    }
+
+    else if (validated) {
+      // window.dutch = { currency: currencies.filter(c => c === info.currency)[0] }
       if (props.onSubmitSucceeded) {
         props.onSubmitSucceeded(info)
       }
@@ -49,22 +61,35 @@ function ExpenditureInfo(props) {
     <Container fluid className="steps-container">
       <h2 className="step-title-header">Expenditure information</h2>
 
-      <Form noValidate validated={validated} onSubmit={handleSubmit} style={{ position: 'relative' }}>
+      <Form noValidate
+            validated={validated}
+            onSubmit={handleSubmit}
+            style={{ position: 'relative' }}>
         <Form.Group controlId="title">
           <Form.Label><FontAwesomeIcon icon={faMoneyCheckAlt} /> What is bills about you want to split?</Form.Label>
-          <Form.Control name="title" required type="text" placeholder="2020 Vancouver trip!" onChange={handleInputChange} />
+          <Form.Control name="title"
+                        required
+                        type="text"
+                        placeholder="2020 Vancouver trip!"
+                        defaultValue={props.expenditureInfo.title}
+                        onChange={handleInputChange} />
         </Form.Group>
 
         <Form.Group controlId="group-members">
           <Form.Label><FontAwesomeIcon icon={faUsers} /> Who do you want to split with?</Form.Label>
-          <Form.Control required name="peopleNames" type="text" placeholder="Aree, Tomas, Jessica" onChange={handleInputChange} />
+          <Form.Control required
+                        name="peopleNames"
+                        type="text"
+                        placeholder="Aree, Tomas, Jessica"
+                        defaultValue={props.expenditureInfo.peopleNames.join(", ")}
+                        onChange={handleInputChange} />
           <Form.Text>Enter the names of people separating with comma (,)</Form.Text>
         </Form.Group>
 
         <Form.Group controlId="currency">
           <Form.Label><FontAwesomeIcon icon={faDollarSign} /> Select the currency</Form.Label>
           <br/>
-          <ToggleButtonGroup id="currency-button-group" type="radio" name="currency" defaultValue={info.currency} onChange={handleCurrencyChange}>
+          <ToggleButtonGroup id="currency-button-group" type="radio" name="currency" defaultValue={props.expenditureInfo.currency || info.currency} onChange={handleCurrencyChange}>
             { currencies.map((currency, _) =>
                 <ToggleButton value={currency} key={currency}>{currency}</ToggleButton>)}
           </ToggleButtonGroup>

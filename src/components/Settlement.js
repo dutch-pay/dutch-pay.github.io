@@ -22,8 +22,9 @@ function Settlement(props) {
 
   const expenditure    = props.expenditureInfo
   const bills          = props.bills
-  const sum            = bills.flatMap(b => b.billAmount)
-                              .reduce((a,b) => parseInt(a) + parseInt(b))
+  const sum            = bills.length === 0 ? 0 :
+                          bills.flatMap(b => b.billAmount)
+                               .reduce((a,b) => parseInt(a) + parseInt(b))
   const amountByPerson = sum / expenditure.peopleNames.length
 
   const debtByPerson = (() => {

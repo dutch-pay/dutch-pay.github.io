@@ -10,7 +10,9 @@ function ProgressStep(props) {
       <div className="title"><span>{props.title}</span></div>
       <div className={`step rounded-circle ${props.completed ? 'completed-step': ''}`}>
       { props.completed ?
-          <FontAwesomeIcon icon={faCheck} className="checked" alt="checked"/> :
+          <FontAwesomeIcon icon={faCheck}
+                           className="checked"
+                           alt="checked"/> :
           <span className="number">{props.step}</span>
       }
       </div>

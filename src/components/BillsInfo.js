@@ -13,23 +13,38 @@ function BillsInfo(props) {
   const [toastShow, setToastShow] = useState(false)
 
   const handleNextButtonClicked = () => {
-    if (!bills || bills.length === 0) {
+    if (props.bills.length === 0 && (!bills || bills.length === 0)) {
       setToastShow(true)
       return
     }
+
     setToastShow(false)
     if (props.onSubmitSucceeded) {
-      props.onSubmitSucceeded(bills);
+      props.onSubmitSucceeded(defaultBillExists() ? props.bills : bills);
     }
   }
 
   const addBill = (bill) => {
-    setBills([...bills, bill])
+    const newBills = defaultBillExists() ? props.bills.concat(bill) : [...bills, bill]
+
+    setBills(newBills)
+    if (props.onBillUpdated) {
+      props.onBillUpdated(newBills)
+    }
   }
 
   const deleteBill = (billToDelete) => {
-    const deletedBills = bills.filter((bill) => bill.id !== billToDelete.id)
+    const billList = defaultBillExists() ? props.bills : bills;
+    const deletedBills = billList.filter((bill) => bill.id !== billToDelete.id)
+
     setBills(deletedBills)
+    if (props.onBillUpdated) {
+      props.onBillUpdated(deletedBills)
+    }
+  }
+
+  function defaultBillExists() {
+      return (bills.length === 0 && props.bills.length > 0)
   }
 
   return props.display && (
@@ -41,7 +56,7 @@ function BillsInfo(props) {
                    currencySymbol={props.currencySymbol} />
 
       <BillsTable onBillDeletionClicked={deleteBill}
-                  bills={bills}
+                  bills={(bills.length === 0) ? props.bills : bills}
                   currencySymbol={props.currencySymbol}
                   actionsShow={true} />
 

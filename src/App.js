@@ -47,12 +47,19 @@ function App() {
     </div>
   )
 
+  const getCompressedURL = () => {
+    const contentParamKey = 'c'
+    const params = new URLSearchParams(window.location.search)
+    
+    return params.has(contentParamKey) ? params.get(contentParamKey) : ''
+  }
+
   return (
     <div className="App">
 
       { renderIntroduction() }
 
-      <DutchForm />
+      <DutchForm compressedURL={getCompressedURL()} />
 
       { /* Share with friends button */ }
 
