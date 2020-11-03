@@ -20,7 +20,12 @@ function App() {
     <div id="introduction">
       <header className="header">
         <h1>
-          <FontAwesomeIcon icon={faDivide} className="App-logo" alt="logo" spin size="lg" />
+          <FontAwesomeIcon icon={faDivide}
+                           className="App-logo"
+                           alt="logo"
+                           size="lg"
+                           spin
+                           />
           &nbsp;&nbsp;&nbsp;
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
           <span>Split bills with friends!</span>
@@ -42,7 +47,9 @@ function App() {
       </header>
 
       <div>
-        <Button className="start-button" size="lg" onClick={scrollToForm}>Get started!</Button>
+        <Button className="start-button"
+                size="lg" 
+                onClick={scrollToForm}>Get started!</Button>
       </div>
     </div>
   )
@@ -50,7 +57,7 @@ function App() {
   const getCompressedURL = () => {
     const contentParamKey = 'c'
     const params = new URLSearchParams(window.location.search)
-    
+
     return params.has(contentParamKey) ? params.get(contentParamKey) : ''
   }
 

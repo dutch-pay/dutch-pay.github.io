@@ -89,9 +89,14 @@ function ExpenditureInfo(props) {
         <Form.Group controlId="currency">
           <Form.Label><FontAwesomeIcon icon={faDollarSign} /> Select the currency</Form.Label>
           <br/>
-          <ToggleButtonGroup id="currency-button-group" type="radio" name="currency" defaultValue={props.expenditureInfo.currency || info.currency} onChange={handleCurrencyChange}>
+          <ToggleButtonGroup id="currency-button-group"
+                             type="radio"
+                             name="currency"
+                             defaultValue={props.expenditureInfo.currency || info.currency}
+                             onChange={handleCurrencyChange}>
             { currencies.map((currency, _) =>
-                <ToggleButton value={currency} key={currency}>{currency}</ToggleButton>)}
+                <ToggleButton value={currency}
+                              key={currency}>{currency}</ToggleButton>)}
           </ToggleButtonGroup>
 
         </Form.Group>

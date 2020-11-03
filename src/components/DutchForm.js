@@ -1,8 +1,7 @@
-import React, { useState, Component, setState } from 'react'
+import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
-import { lwz, lzma } from 'json-url'
 
 import 'components/DutchForm.scss'
 import DutchProgressBar from 'components/DutchProgressBar'
@@ -39,6 +38,10 @@ class DutchForm extends Component {
   }
 
   componentDidMount() {
+    if (this.props.compressedURL !== '') {
+      document.getElementById("dutch-form").scrollIntoView()
+    }
+
     codec.decompress(this.props.compressedURL)
       .then(json => this.setState(json))
   }

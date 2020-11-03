@@ -49,7 +49,9 @@ function NewBillForm(props) {
     <Card>
       <Card.Body>
         <Card.Title>Add new bill</Card.Title>
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+        <Form noValidate
+              validated={validated}
+              onSubmit={handleSubmit}>
           <Form.Row>
             <Col xs={6} md={5}>
               <Form.Group controlId="billAmount">
