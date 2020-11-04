@@ -5,6 +5,10 @@ Dutch pay will let you know how to split bills with minimum transaction.
 
 For new features, please use [projects](https://github.com/dutch-pay/dutch-pay.github.io/projects)
 
+Enjoyed? Buy me a coffee!
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/G2G22LHXS)
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
