@@ -71,3 +71,13 @@
     background-color: darken($coral, 20%) !important;
   }
 }
+
+#kofi {
+  width: 100%;
+  text-align: center;
+
+  a {
+    margin-top: 5px;
+    display: block;
+  }
+}

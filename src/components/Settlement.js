@@ -3,6 +3,7 @@ import { Container, Button, Card, Row, Col, Table, Toast } from 'react-bootstrap
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight, faExclamationTriangle, faPaperPlane, faCopy, faDownload, faSpinner, faRedo } from '@fortawesome/free-solid-svg-icons'
 import domtoimage from 'dom-to-image'
+import { saveAs } from 'file-saver'
 
 import BillsTable from 'components/BillsTable'
 import 'components/Settlement.scss'
@@ -115,18 +116,11 @@ function Settlement(props) {
     setDownloading(true)
 
     settlementTableElem.current.classList.add("bill-table-mobile")
-    domtoimage.toPng(reportElem.current)
-      .then(dataURL => {
+    domtoimage.toBlob(reportElem.current)
+    .then(function(blob) {
         settlementTableElem.current.classList.remove("bill-table-mobile")
-
-        var link = document.createElement("a")
-        document.body.appendChild(link)
-        link.download = `${expenditure.title.split(' ').join('_')}.jpeg`
-        link.href = dataURL
-        link.target = '_blank'
-        link.click()
-        document.body.removeChild(link)
-      })
+        saveAs(blob, `${expenditure.title.split(' ').join('_')}.jpeg`)
+    })
 
     setDownloading(false)
     setDownloadToastShow(true)

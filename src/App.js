@@ -48,7 +48,7 @@ function App() {
 
       <div>
         <Button className="start-button"
-                size="lg" 
+                size="lg"
                 onClick={scrollToForm}>Get started!</Button>
       </div>
     </div>
@@ -68,7 +68,17 @@ function App() {
 
       <DutchForm compressedURL={getCompressedURL()} />
 
-      { /* Share with friends button */ }
+      <div id="kofi">
+        <span>Did you enjoy dutch paying?</span><br/>
+        <a href='https://ko-fi.com/G2G22LHXS'
+           target='_blank'>
+          <img height='36'
+               style={{ 'border':'0px', 'height':'36px' }}
+               src='https://cdn.ko-fi.com/cdn/kofi2.png?v=2'
+               border='0'
+               alt='Buy Me a Coffee at ko-fi.com' />
+        </a>
+      </div>
 
       <Footer/>
 
