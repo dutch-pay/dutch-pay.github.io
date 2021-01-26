@@ -65,6 +65,7 @@ function NewBillForm(props) {
                   <Form.Control required
                                 name="billAmount"
                                 type="number"
+                                step="0.01"
                                 onChange={handleInputChange} />
                 </InputGroup>
               </Form.Group>

@@ -119,7 +119,7 @@ function Settlement(props) {
     domtoimage.toBlob(reportElem.current)
     .then(function(blob) {
         settlementTableElem.current.classList.remove("bill-table-mobile")
-        saveAs(blob, `${expenditure.title.split(' ').join('_')}.jpeg`)
+        saveAs(blob, `${expenditure.title.split(' ').join('_')}.png`)
     })
 
     setDownloading(false)
